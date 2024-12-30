@@ -1,0 +1,44 @@
+openapi: 3.0.1
+info:
+  title: GitHub Repository Search API
+  description: GitHub API를 통해 CVE 코드를 기반으로 리포지토리를 검색합니다.
+  version: 1.0.0
+servers:
+  - url: https://api.github.com
+paths:
+  /search/repositories:
+    get:
+      summary: 리포지토리 검색
+      description: 주어진 쿼리로 GitHub 리포지토리를 검색합니다.
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: 검색할 쿼리(예:cve코드)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 검색 결과를 성공적으로 반환합니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_count:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        full_name:
+                          type: string
+                        html_url:
+                          type: string
+                        description:
+                          type: string
+                        stargazers_count:
+                          type: integer
+                        language:
+                          type: string
